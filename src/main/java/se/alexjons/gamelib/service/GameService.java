@@ -1,6 +1,5 @@
 package se.alexjons.gamelib.service;
 
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import se.alexjons.gamelib.dto.GameDTO;
 import se.alexjons.gamelib.entity.Game;
@@ -54,7 +53,7 @@ public class GameService {
                         gameDTO.getTitle(),
                         gameDTO.getGenre(),
                         gameDTO.getRating(),
-                        gameDTO.getReleaseYear(),
+                        gameDTO.getRelease(),
                         publisher
                 ));
 

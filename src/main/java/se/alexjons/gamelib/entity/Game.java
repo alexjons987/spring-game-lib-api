@@ -26,7 +26,7 @@ public class Game {
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    LocalDate releaseYear;
+    LocalDate release;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")
@@ -35,20 +35,20 @@ public class Game {
     public Game() {
     }
 
-    public Game(String title, String genre, Float rating, LocalDate releaseYear, Publisher publisher) {
+    public Game(String title, String genre, Float rating, LocalDate release, Publisher publisher) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;
-        this.releaseYear = releaseYear;
+        this.release = release;
         this.publisher = publisher;
     }
 
-    public Game(Integer id, String title, String genre, Float rating, LocalDate releaseYear, Publisher publisher) {
+    public Game(Integer id, String title, String genre, Float rating, LocalDate release, Publisher publisher) {
         this.id = id;
         this.title = title;
         this.genre = genre;
         this.rating = rating;
-        this.releaseYear = releaseYear;
+        this.release = release;
         this.publisher = publisher;
     }
 
@@ -84,12 +84,12 @@ public class Game {
         this.rating = rating;
     }
 
-    public LocalDate getReleaseYear() {
-        return releaseYear;
+    public LocalDate getRelease() {
+        return release;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
-        this.releaseYear = releaseYear;
+    public void setRelease(LocalDate release) {
+        this.release = release;
     }
 
     public Publisher getPublisher() {

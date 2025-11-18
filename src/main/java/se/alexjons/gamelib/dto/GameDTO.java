@@ -24,7 +24,7 @@ public class GameDTO {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    LocalDate releaseYear;
+    LocalDate release;
 
     @Positive(message = "publisherId must be positive")
     Integer publisherId;
@@ -32,11 +32,11 @@ public class GameDTO {
     public GameDTO() {
     }
 
-    public GameDTO(String title, String genre, Float rating, LocalDate releaseYear, Integer publisherId) {
+    public GameDTO(String title, String genre, Float rating, LocalDate release, Integer publisherId) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;
-        this.releaseYear = releaseYear;
+        this.release = release;
         this.publisherId = publisherId;
     }
 
@@ -52,8 +52,8 @@ public class GameDTO {
         return rating;
     }
 
-    public LocalDate getReleaseYear() {
-        return releaseYear;
+    public LocalDate getRelease() {
+        return release;
     }
 
     public Integer getPublisherId() {

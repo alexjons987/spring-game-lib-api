@@ -13,7 +13,7 @@ The project should follow a clean structure:
 * The application should be connected to a MySQL database
 * The table should be created via **JPA**
 * At least **one main entity**, e.g.:
-  * Game (id, title, genre, rating, releaseYear)
+  * Game (id, title, genre, rating, release)
 * At least **one relationship entity**, e.g.:
   * Publisher
   * Developer

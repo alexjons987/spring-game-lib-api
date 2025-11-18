@@ -22,7 +22,7 @@ public class GameMapper {
                 game.getTitle(),
                 game.getGenre(),
                 game.getRating(),
-                game.getReleaseYear(),
+                game.getRelease(),
                 game.getPublisher().getPublisherId()
         );
     }
@@ -31,14 +31,15 @@ public class GameMapper {
         if (gameDTO == null) return null;
 
         Publisher publisher = publisherRepository.findById(gameDTO.getPublisherId())
-                .orElseThrow(() -> new IllegalArgumentException("Publisher not found with ID: " + gameDTO.getPublisherId()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Publisher not found with ID: " + gameDTO.getPublisherId()
                 ));
 
         return new Game(
                 gameDTO.getTitle(),
                 gameDTO.getGenre(),
                 gameDTO.getRating(),
-                gameDTO.getReleaseYear(),
+                gameDTO.getRelease(),
                 publisher
         );
     }
