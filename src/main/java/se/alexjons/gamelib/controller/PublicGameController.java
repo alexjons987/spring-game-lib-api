@@ -14,9 +14,6 @@ import java.util.List;
 @RequestMapping("/api/public/games")
 public class PublicGameController {
 
-    // TODO: Add the following endpoints
-    // GET /games/{id} - get game by id
-
     private final GameService gameService;
 
     public PublicGameController(GameService gameService) {

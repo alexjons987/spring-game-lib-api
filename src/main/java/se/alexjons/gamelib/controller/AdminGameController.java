@@ -11,10 +11,6 @@ import se.alexjons.gamelib.service.GameService;
 @RestController
 @RequestMapping("/api/admin/games")
 public class AdminGameController {
-    // TODO: Add the following endpoints
-    // POST /games - add new game
-    // PUT /games/{id} - update existing game
-    // DELETE /games/{id} - delete game
 
     private final GameService gameService;
 
@@ -25,5 +21,15 @@ public class AdminGameController {
     @PostMapping
     public ResponseEntity<GameDTO> addNewGame(@Valid @RequestBody GameDTO gameDTO) {
         return ResponseEntity.ok(gameService.addNewGame(gameDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GameDTO> updateGame(@PathVariable int id, @RequestBody GameDTO newGameDetailsDTO) {
+        return ResponseEntity.status(501).build(); // TODO: Implement
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGame(@PathVariable int id) {
+        return ResponseEntity.status(501).build(); // TODO: Implement
     }
 }
