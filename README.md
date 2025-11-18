@@ -2,13 +2,13 @@
 Students can choose a fun theme, **but the requirement structure is the same**.
 ## 1. Project structure
 The project should follow a clean structure:
-`config/`
-`controller/`
-`dto/`
-`entity/`
-`exception/`
-`repository/`
-`service/`
+* `config/`
+* `controller/`
+* `dto/`
+* `entity/`
+* `exception/`
+* `repository/`
+* `service/`
 ## 2. Database (MySQL)
 * The application should be connected to a MySQL database
 * The table should be created via **JPA**
@@ -61,6 +61,7 @@ If validation fails, the correct error message should be returned.
 Custom exception system:
 * `ResourceNotFoundException`
 * `BadRequestException`
+
 A **GlobalExceptionHandler** should exist and return JSON error responses like:
 ```json
 {
