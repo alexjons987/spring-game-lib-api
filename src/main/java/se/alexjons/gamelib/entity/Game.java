@@ -1,6 +1,8 @@
 package se.alexjons.gamelib.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -19,9 +21,11 @@ public class Game {
     String genre;
 
     @Column(nullable = false)
-    String rating;
+    Float rating;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate releaseYear;
 
     @ManyToOne
@@ -31,7 +35,7 @@ public class Game {
     public Game() {
     }
 
-    public Game(String title, String genre, String rating, LocalDate releaseYear, Publisher publisher) {
+    public Game(String title, String genre, Float rating, LocalDate releaseYear, Publisher publisher) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;
@@ -39,7 +43,7 @@ public class Game {
         this.publisher = publisher;
     }
 
-    public Game(Integer id, String title, String genre, String rating, LocalDate releaseYear, Publisher publisher) {
+    public Game(Integer id, String title, String genre, Float rating, LocalDate releaseYear, Publisher publisher) {
         this.id = id;
         this.title = title;
         this.genre = genre;
@@ -72,11 +76,11 @@ public class Game {
         this.genre = genre;
     }
 
-    public String getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
