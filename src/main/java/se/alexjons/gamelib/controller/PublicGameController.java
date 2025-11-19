@@ -2,7 +2,7 @@ package se.alexjons.gamelib.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.alexjons.gamelib.dto.GameDTO;
+import se.alexjons.gamelib.dto.GameResponseDTO;
 import se.alexjons.gamelib.service.GameService;
 
 import java.util.List;
@@ -18,12 +18,12 @@ public class PublicGameController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GameDTO>> getAllGames() {
+    public ResponseEntity<List<GameResponseDTO>> getAllGames() {
         return ResponseEntity.ok(gameService.getAllGames());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GameDTO> getGame(@PathVariable int id) {
+    public ResponseEntity<GameResponseDTO> getGame(@PathVariable int id) {
         return ResponseEntity.ok(gameService.getGameById(id));
     }
 }

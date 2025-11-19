@@ -31,4 +31,12 @@ public class PublisherService {
             throw new ResourceNotFoundException("No publishers were found");
         }
     }
+
+    public PublisherDTO addPublisher(PublisherDTO publisherDTO) {
+        Publisher publisher = publisherRepository.save(
+                new Publisher(publisherDTO.getName(), publisherDTO.getFounded())
+        );
+
+        return publisherMapper.toDTO(publisher);
+    }
 }

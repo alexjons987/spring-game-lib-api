@@ -20,7 +20,7 @@ public class AdminPublisherController {
 
     @PostMapping
     public ResponseEntity<PublisherDTO> addNewPublisher(@Valid @RequestBody PublisherDTO publisherDTO) {
-        return ResponseEntity.status(501).build(); // TODO: Implement
+        return ResponseEntity.ok(publisherService.addPublisher(publisherDTO));
     }
 
     @PutMapping("/{id}")

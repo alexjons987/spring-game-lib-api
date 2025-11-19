@@ -1,10 +1,8 @@
 package se.alexjons.gamelib.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @Table(name = "publishers")
@@ -19,10 +17,6 @@ public class Publisher {
 
     @Column(nullable = false)
     LocalDate founded;
-
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
-    @JsonIgnore
-    Set<Game> gamesPublished;
 
     public Publisher() {
     }

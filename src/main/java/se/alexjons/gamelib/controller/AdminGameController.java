@@ -4,7 +4,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import se.alexjons.gamelib.dto.GameDTO;
+import se.alexjons.gamelib.dto.GameRequestDTO;
+import se.alexjons.gamelib.dto.GameResponseDTO;
 import se.alexjons.gamelib.service.GameService;
 
 @Validated
@@ -18,13 +19,13 @@ public class AdminGameController {
         this.gameService = gameService;
     }
 
-    @PostMapping
-    public ResponseEntity<GameDTO> addNewGame(@Valid @RequestBody GameDTO gameDTO) {
-        return ResponseEntity.ok(gameService.addNewGame(gameDTO));
+    @PostMapping()
+    public ResponseEntity<GameResponseDTO> addNewGame(@Valid @RequestBody GameRequestDTO gameRequestDTO) {
+        return ResponseEntity.ok(gameService.addNewGame(gameRequestDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameDTO> updateGame(@PathVariable int id, @RequestBody GameDTO newGameDetailsDTO) {
+    public ResponseEntity<GameRequestDTO> updateGame(@PathVariable int id, @RequestBody GameRequestDTO newGameDetailsDTO) {
         return ResponseEntity.status(501).build(); // TODO: Implement
     }
 

@@ -1,7 +1,8 @@
 package se.alexjons.gamelib.mapper;
 
 import org.springframework.stereotype.Component;
-import se.alexjons.gamelib.dto.GameDTO;
+import se.alexjons.gamelib.dto.GameRequestDTO;
+import se.alexjons.gamelib.dto.GameResponseDTO;
 import se.alexjons.gamelib.entity.Game;
 import se.alexjons.gamelib.entity.Publisher;
 import se.alexjons.gamelib.repository.PublisherRepository;
@@ -15,31 +16,31 @@ public class GameMapper {
         this.publisherRepository = publisherRepository;
     }
 
-    public GameDTO toDTO(Game game) {
+    public GameResponseDTO toResponseDTO(Game game) {
         if (game == null) return null;
 
-        return new GameDTO(
+        return new GameResponseDTO(
                 game.getTitle(),
                 game.getGenre(),
                 game.getRating(),
-                game.getRelease(),
-                game.getPublisher().getPublisherId()
+                game.getReleaseDate(),
+                game.getPublisher()
         );
     }
 
-    public Game toEntity(GameDTO gameDTO) {
-        if (gameDTO == null) return null;
+    public Game toEntity(GameRequestDTO gameRequestDTO) {
+        if (gameRequestDTO == null) return null;
 
-        Publisher publisher = publisherRepository.findById(gameDTO.getPublisherId())
+        Publisher publisher = publisherRepository.findById(gameRequestDTO.getPublisherId())
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "Publisher not found with ID: " + gameDTO.getPublisherId()
+                        "Publisher not found with ID: " + gameRequestDTO.getPublisherId()
                 ));
 
         return new Game(
-                gameDTO.getTitle(),
-                gameDTO.getGenre(),
-                gameDTO.getRating(),
-                gameDTO.getRelease(),
+                gameRequestDTO.getTitle(),
+                gameRequestDTO.getGenre(),
+                gameRequestDTO.getRating(),
+                gameRequestDTO.getRelease(),
                 publisher
         );
     }

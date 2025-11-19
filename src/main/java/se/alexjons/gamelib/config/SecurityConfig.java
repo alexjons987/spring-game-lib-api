@@ -32,9 +32,15 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() { // In-memory users
         UserDetails admin = User
-                .withUsername("alex")
-                .password(passwordEncoder().encode("admin")) // Use our encoding for passwords
+                .withUsername("admin")
+                .password(passwordEncoder().encode("admin123")) // Use our encoding for passwords
                 .roles("ADMIN")
+                .build();
+
+        UserDetails user = User
+                .withUsername("user")
+                .password(passwordEncoder().encode("user123")) // Use our encoding for passwords
+                .roles("USER")
                 .build();
 
         return new InMemoryUserDetailsManager(admin);

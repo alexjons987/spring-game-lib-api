@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-public class GameDTO {
+public class GameRequestDTO {
 
     @NotBlank(message = "title cannot be empty")
     String title;
@@ -29,10 +29,10 @@ public class GameDTO {
     @Positive(message = "publisherId must be positive")
     Integer publisherId;
 
-    public GameDTO() {
+    public GameRequestDTO() {
     }
 
-    public GameDTO(String title, String genre, Float rating, LocalDate release, Integer publisherId) {
+    public GameRequestDTO(String title, String genre, Float rating, LocalDate release, Integer publisherId) {
         this.title = title;
         this.genre = genre;
         this.rating = rating;

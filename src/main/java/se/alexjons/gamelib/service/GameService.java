@@ -1,7 +1,8 @@
 package se.alexjons.gamelib.service;
 
 import org.springframework.stereotype.Service;
-import se.alexjons.gamelib.dto.GameDTO;
+import se.alexjons.gamelib.dto.GameRequestDTO;
+import se.alexjons.gamelib.dto.GameResponseDTO;
 import se.alexjons.gamelib.entity.Game;
 import se.alexjons.gamelib.entity.Publisher;
 import se.alexjons.gamelib.exception.ResourceNotFoundException;
@@ -24,39 +25,39 @@ public class GameService {
         this.publisherRepository = publisherRepository;
     }
 
-    public List<GameDTO> getAllGames() {
+    public List<GameResponseDTO> getAllGames() {
         List<Game> games = gameRepository.findAll();
 
         if (!games.isEmpty()) {
             return games.stream()
-                    .map(gameMapper::toDTO)
+                    .map(gameMapper::toResponseDTO)
                     .toList();
         } else {
             throw new ResourceNotFoundException("No games were found");
         }
     }
 
-    public GameDTO getGameById(int id) {
+    public GameResponseDTO getGameById(int id) {
         return gameRepository.findById(id)
-                .map(gameMapper::toDTO)
+                .map(gameMapper::toResponseDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("Could not find game with ID " + id));
     }
 
-    public GameDTO addNewGame(GameDTO gameDTO) {
-        Publisher publisher = publisherRepository.findById(gameDTO.getPublisherId())
+    public GameResponseDTO addNewGame(GameRequestDTO gameRequestDTO) {
+        Publisher publisher = publisherRepository.findById(gameRequestDTO.getPublisherId())
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "Publisher not found with ID: " + gameDTO.getPublisherId()
+                        "Publisher not found with ID: " + gameRequestDTO.getPublisherId()
                 ));
 
         Game game = gameRepository.save(
                 new Game(
-                        gameDTO.getTitle(),
-                        gameDTO.getGenre(),
-                        gameDTO.getRating(),
-                        gameDTO.getRelease(),
+                        gameRequestDTO.getTitle(),
+                        gameRequestDTO.getGenre(),
+                        gameRequestDTO.getRating(),
+                        gameRequestDTO.getRelease(),
                         publisher
                 ));
 
-        return gameMapper.toDTO(game);
+        return gameMapper.toResponseDTO(game);
     }
 }
