@@ -25,8 +25,10 @@ public class AdminGameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameRequestDTO> updateGame(@PathVariable int id, @RequestBody GameRequestDTO newGameDetailsDTO) {
-        return ResponseEntity.status(501).build(); // TODO: Implement
+    public ResponseEntity<GameResponseDTO> updateGame(
+            @PathVariable int id,
+            @RequestBody GameRequestDTO newGameDetailsDTO) {
+        return ResponseEntity.ok(gameService.updateGame(id, newGameDetailsDTO));
     }
 
     @DeleteMapping("/{id}")

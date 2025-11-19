@@ -3,6 +3,7 @@ package se.alexjons.gamelib.service;
 import org.springframework.stereotype.Service;
 import se.alexjons.gamelib.dto.GameRequestDTO;
 import se.alexjons.gamelib.dto.GameResponseDTO;
+import se.alexjons.gamelib.dto.PublisherDTO;
 import se.alexjons.gamelib.entity.Game;
 import se.alexjons.gamelib.entity.Publisher;
 import se.alexjons.gamelib.exception.ResourceNotFoundException;
@@ -11,6 +12,7 @@ import se.alexjons.gamelib.repository.GameRepository;
 import se.alexjons.gamelib.repository.PublisherRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -59,6 +61,33 @@ public class GameService {
                 ));
 
         return gameMapper.toResponseDTO(game);
+    }
+
+    public GameResponseDTO updateGame(int id, GameRequestDTO newGameDetailsDTO) {
+        Optional<Game> game = gameRepository.findById(id);
+
+        if (game.isPresent()) {
+            if (newGameDetailsDTO.getTitle() != null) {
+                game.get().setTitle(newGameDetailsDTO.getTitle());
+            }
+            if (newGameDetailsDTO.getGenre() != null) {
+                game.get().setGenre(newGameDetailsDTO.getGenre());
+            }
+            if (newGameDetailsDTO.getRating() != null) {
+                game.get().setRating(newGameDetailsDTO.getRating());
+            }
+            if (newGameDetailsDTO.getRelease() != null) {
+                game.get().setReleaseDate(newGameDetailsDTO.getRelease());
+            }
+            if (newGameDetailsDTO.getPublisherId() != null) {
+                Optional<Publisher> publisher = publisherRepository.findById(newGameDetailsDTO.getPublisherId());
+                publisher.ifPresent(p -> game.get().setPublisher(p));
+            }
+
+            gameRepository.save(game.get());
+            return gameMapper.toResponseDTO(game.get());
+        }
+        return null;
     }
 
     public boolean deleteGameById(int id) {
