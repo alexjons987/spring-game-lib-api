@@ -1,5 +1,6 @@
 package se.alexjons.gamelib.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.alexjons.gamelib.dto.GameResponseDTO;
@@ -25,5 +26,19 @@ public class PublicGameController {
     @GetMapping("/{id}")
     public ResponseEntity<GameResponseDTO> getGame(@PathVariable int id) {
         return ResponseEntity.ok(gameService.getGameById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<GameResponseDTO>> searchGames(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) Float minRating,
+            @RequestParam(required = false) Float maxRating,
+            @RequestParam(required = false) String publisher) {
+        if (title == null && genre == null && minRating == null && maxRating == null && publisher == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(501).build(); // TODO: Implement
+        }
     }
 }
