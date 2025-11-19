@@ -3,7 +3,6 @@ package se.alexjons.gamelib.mapper;
 import org.springframework.stereotype.Component;
 import se.alexjons.gamelib.dto.PublisherDTO;
 import se.alexjons.gamelib.entity.Publisher;
-import se.alexjons.gamelib.repository.PublisherRepository;
 
 @Component
 public class PublisherMapper {

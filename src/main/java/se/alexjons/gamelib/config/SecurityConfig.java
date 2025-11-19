@@ -1,7 +1,9 @@
 package se.alexjons.gamelib.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,38 +14,50 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import se.alexjons.gamelib.repository.UserRepository;
+import se.alexjons.gamelib.service.CustomUserDetailService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSec) throws Exception { // Filter chain for security
         httpSec
                 .csrf(csrf -> csrf.disable()) // Disabled CSRF to allow POST
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/public/**").permitAll() // Allow everything under /public
-                        .requestMatchers("/api/admin/**").authenticated()) // Require auth under /admin
+                        .requestMatchers(HttpMethod.GET, "/api/public/**").permitAll() // Allow GET under /public
+                        .requestMatchers(HttpMethod.POST, "/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/admin/**").hasRole("ADMIN"))
+                .userDetailsService(customUserDetailService)
+                .userDetailsService(userDetailsService())
                 .httpBasic(Customizer.withDefaults());
 
         return httpSec.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() { // In-memory users
+    public UserDetailsService userDetailsService() {
+        // In-memory users
+
         UserDetails admin = User
-                .withUsername("admin")
-                .password(passwordEncoder().encode("admin123")) // Use our encoding for passwords
+                .withUsername("superadmin")
+                .password(passwordEncoder().encode("superadmin123")) // Use our encoding for passwords
                 .roles("ADMIN")
                 .build();
 
         UserDetails user = User
-                .withUsername("user")
+                .withUsername("userIN")
                 .password(passwordEncoder().encode("user123")) // Use our encoding for passwords
                 .roles("USER")
                 .build();
 
-        return new InMemoryUserDetailsManager(admin);
+        return new InMemoryUserDetailsManager(admin, user);
     }
 
     @Bean

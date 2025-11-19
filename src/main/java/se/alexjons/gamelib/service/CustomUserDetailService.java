@@ -1,0 +1,39 @@
+package se.alexjons.gamelib.service;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import se.alexjons.gamelib.entity.AppUser;
+import se.alexjons.gamelib.repository.UserRepository;
+
+@Service
+public class CustomUserDetailService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    public CustomUserDetailService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        System.out.println("!!!!!!!!!!!!!!!!!!!Username: " + username);
+        if (userRepository.findByUsername(username).isPresent()) {
+            System.out.println("HEJ HEJ");
+        }
+        AppUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return new User(
+                user.getUsername(),
+                user.getPassword(),
+                user.getRoles().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getName()))
+                        .toList()
+        );
+    }
+}
