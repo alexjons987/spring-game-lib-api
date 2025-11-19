@@ -60,4 +60,13 @@ public class GameService {
 
         return gameMapper.toResponseDTO(game);
     }
+
+    public boolean deleteGameById(int id) {
+        if (gameRepository.existsById(id)) {
+            gameRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

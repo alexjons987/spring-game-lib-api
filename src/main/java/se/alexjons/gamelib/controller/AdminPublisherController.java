@@ -25,11 +25,11 @@ public class AdminPublisherController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PublisherDTO> updatePublisher(@PathVariable int id, @RequestBody PublisherDTO newPublisherDetailsDTO) {
-        return ResponseEntity.status(501).build(); // TODO: Implement
+        return ResponseEntity.ok(publisherService.updatePublisher(id, newPublisherDetailsDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePublisher(@PathVariable int id) {
-        return ResponseEntity.status(501).build(); // TODO: Implement
+        return publisherService.deletePublisherById(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }

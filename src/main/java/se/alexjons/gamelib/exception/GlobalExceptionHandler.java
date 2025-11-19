@@ -37,6 +37,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(httpStatus).body(body);
     }
 
+    @ExceptionHandler(PublisherHasReferencedGamesException.class) // Publisher has referenced games
+    public ResponseEntity<Map<String, Object>> handlePublisherDeletionException(PublisherHasReferencedGamesException ex) {
+        HttpStatus httpStatus = HttpStatus.CONFLICT;
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("error", ex.getMessage());
+        body.put("status", httpStatus.value());
+        body.put("timestamp", LocalDateTime.now());
+
+        return ResponseEntity.status(httpStatus).body(body);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class) // Validation
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;

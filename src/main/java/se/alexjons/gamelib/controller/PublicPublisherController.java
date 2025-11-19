@@ -24,6 +24,6 @@ public class PublicPublisherController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PublisherDTO> getPublisher(@PathVariable int id) {
-        return ResponseEntity.status(501).build(); // TODO: Implement
+        return ResponseEntity.ok(publisherService.getPublisherById(id));
     }
 }
