@@ -33,6 +33,6 @@ public class AdminGameController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGame(@PathVariable int id) {
-        return ResponseEntity.status(501).build(); // TODO: Implement
+        return gameService.deleteGameById(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
