@@ -42,22 +42,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        // In-memory users
-
+    public UserDetailsService userDetailsService() { // In-memory users
         UserDetails admin = User
                 .withUsername("superadmin")
                 .password(passwordEncoder().encode("superadmin123")) // Use our encoding for passwords
                 .roles("ADMIN")
                 .build();
 
-        UserDetails user = User
-                .withUsername("userIN")
-                .password(passwordEncoder().encode("user123")) // Use our encoding for passwords
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
+        return new InMemoryUserDetailsManager(admin);
     }
 
     @Bean
